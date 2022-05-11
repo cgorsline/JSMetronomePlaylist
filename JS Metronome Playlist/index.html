@@ -11,25 +11,30 @@
     <div class="container">
         <div class="metronome">
             <div class="bpm-display">
-                <span class="tempo">140</span>
+                <span class="tempo" >120</span>
                 <span class="bpm">BPM</span>
             </div>
-            <div class="tempo-text">medium</div>
+            <div class="tempo-text" >medium</div>
             <div class="tempo-settings">
                 <div class="adjust-tempo-btn decrease-tempo">-</div>
                 <input type="range" min="45" max="280" step="1" class="slider">
                 <div class="adjust-tempo-btn increase-tempo">+</div>
             </div>
+            <div class="tap-tempo" id="TAP">TAP</div>
             <div class="start-stop">START</div>
+            
             <div class="measures">
                 <div class="subtract-beats stepper">-</div>
                 <div class="measure-count">4</div>
                 <div class="add-beats stepper">+</div>
             </div>
             <span class="beats-per-measure-text">Beats per measure</span>
+            <br>
+            <div class="playlist">
+                <div class="open-playlist-btn">Open Playlist</div>
+            </div>
         </div>
     </div>
-
-    <script src="app.js" type="module"></script>
+    <script src="./app.js" type="module"></script>
 </body>
 </html>
