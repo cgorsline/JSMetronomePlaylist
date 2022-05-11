@@ -13,8 +13,13 @@ const measureCount = document.querySelector('.measure-count');
 const click1 = new Audio ('click1.mp3');
 const click2 = new Audio ('click2.mp3');
 
+// The Tap Tempo button variables
+const tapElement = document.getElementById('TAP');
+const precision = 5;
+let taps = [];
+
 // Default values for BPM's, Number of Beats, and Tempo Comment
-let bpm = 140;
+let bpm = 120;
 let beatsPerMeasure = 4;
 let count = 0;
 let tempoTextString = 'MEDIUM';
@@ -22,7 +27,7 @@ let isRunning = false;
 
 // Decrease tempo button event listener
 decreaseTempoBtn.addEventListener('click', () => {
-    if (bpm <= 20) { return};
+    if (bpm <= 45) { return};
     bpm--;
     validateTempo();
     updateMetronome()
@@ -86,7 +91,7 @@ function updateMetronome() {
 }
 
 function validateTempo() {
-    if (bpm <= 20) { return};
+    if (bpm <= 45) { return};
     if (bpm >= 280) { return};
 }
 
@@ -105,4 +110,60 @@ function playClick() {
     count++;
 }
 
+function tapListener() {
+    tapElement.onclick = function() {
+        taps.push( Date.now() );
+        calcBPM();
+    };
+}
+
+function calcBPM() {
+    let currentBPM = 0;
+    let ticks = [];
+
+    if (taps.length >= 2) {
+        for (let i = 0; i < taps.length; i++) {
+            if (i >= 1) {
+                ticks.push(Math.round(60 / (taps[i] / 1000 - taps[i-1] / 1000) * 100) / 100);
+            }
+        }
+    }
+
+    if (taps.length >= 24) {
+        taps.shift();
+    }
+
+    if (ticks.length >= 2) {
+        currentBPM = getAverage(ticks, precision);
+        if (taps.length >= precision + 3) {
+            if (currentBPM % 2 == 1) currentBPM = getAverage(ticks, precision + 1);
+            if (currentBPM % 2 == 1) currentBPM = getAverage(ticks, precision + 2);
+            if (currentBPM % 2 == 1) currentBPM = getAverage(ticks, precision + 3);
+        }
+        if (bpm == 0 || bpm - currentBPM >= 10) {
+            bpm = currentBPM;
+        }
+        bpm = currentBPM;
+        showCurrentBPM();
+    }
+}
+
+function getAverage(Values, Precision) {
+    let ticks = Values;
+    let n = 0;
+
+    for (let i = ticks.length-1; i >= 0; i--) {
+        n += ticks[i];
+        if (ticks.length - i >= Precision) break;
+    }
+
+    return n / precision;
+}
+
+function showCurrentBPM() {
+    bpm = Math.round(bpm);
+    validateTempo();
+    updateMetronome();
+}
+window.onload = tapListener;
 const metronome = new Timer(playClick, 60000 / bpm, { immediate: true});
