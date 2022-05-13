@@ -8,6 +8,9 @@ const startStopBtn = document.querySelector('.start-stop');
 const subtractBeats = document.querySelector('.subtract-beats');
 const addBeats = document.querySelector('.add-beats');
 const measureCount = document.querySelector('.measure-count');
+const openPlaylistBtn = document.querySelector('.open-playlist-btn');
+const removeFieldBtn = document.querySelector('.remove-field-btn');
+const addFieldBtn = document.querySelector('.add-field-btn');
 
 // The 2 Audio Files
 const click1 = new Audio ('click1.mp3');
@@ -24,6 +27,12 @@ let beatsPerMeasure = 4;
 let count = 0;
 let tempoTextString = 'MEDIUM';
 let isRunning = false;
+
+// Create Playlist running variable
+let isPlaylistOn = false;
+
+// Create Playlist counting variable
+var playlistCount = 1;
 
 // Decrease tempo button event listener
 decreaseTempoBtn.addEventListener('click', () => {
@@ -78,44 +87,13 @@ startStopBtn.addEventListener('click', () => {
     }
 });
 
-function updateMetronome() {
-    tempoDisplay.textContent = bpm;
-    tempoSlider.value = bpm;
-    metronome.timeInterval = 60000 / bpm;
-    tempoText.textContent = tempoTextString;
-    if (bpm <= 45) { tempoTextString = "super slow"};
-    if (bpm > 45 && bpm <= 80) { tempoTextString = "slow"};
-    if (bpm > 80 && bpm <= 120) { tempoTextString = "medium"};
-    if (bpm > 120 && bpm <= 155) { tempoTextString = "fast"};
-    if (bpm > 155) { tempoTextString = "super fast"};
-}
-
-function validateTempo() {
-    if (bpm <= 45) { return};
-    if (bpm >= 280) { return};
-}
-
-function playClick() {
-    if (count == beatsPerMeasure) {
-        count = 0;
-    }
-
-    if (count == 0) {
-        click1.play();
-        click1.currentTime = 0;
-    } else {
-        click2.play();
-        click2.currentTime = 0;
-    }
-    count++;
-}
-
+// Tap Tempo listener with validation and update
 function tapListener() {
     tapElement.onclick = function() {
         taps.push( Date.now() );
         calcBPM();
     };
-}
+};
 
 function calcBPM() {
     let currentBPM = 0;
@@ -146,7 +124,7 @@ function calcBPM() {
         bpm = currentBPM;
         showCurrentBPM();
     }
-}
+};
 
 function getAverage(Values, Precision) {
     let ticks = Values;
@@ -158,12 +136,104 @@ function getAverage(Values, Precision) {
     }
 
     return n / precision;
-}
+};
 
 function showCurrentBPM() {
     bpm = Math.round(bpm);
     validateTempo();
     updateMetronome();
-}
+};
+
+function updateMetronome() {
+    tempoDisplay.textContent = bpm;
+    tempoSlider.value = bpm;
+    metronome.timeInterval = 60000 / bpm;
+    tempoText.textContent = tempoTextString;
+    if (bpm <= 45) { tempoTextString = "super slow"};
+    if (bpm > 45 && bpm <= 80) { tempoTextString = "slow"};
+    if (bpm > 80 && bpm <= 120) { tempoTextString = "medium"};
+    if (bpm > 120 && bpm <= 155) { tempoTextString = "fast"};
+    if (bpm > 155) { tempoTextString = "super fast"};
+};
+
+function validateTempo() {
+    if (bpm <= 45) { return};
+    if (bpm >= 280) { return};
+};
+
+function playClick() {
+    if (count == beatsPerMeasure) {
+        count = 0;
+    }
+
+    if (count == 0) {
+        click1.play();
+        click1.currentTime = 0;
+    } else {
+        click2.play();
+        click2.currentTime = 0;
+    }
+    count++;
+};
+
+// Open/Close Playlist button listener
+openPlaylistBtn.addEventListener('click', () => {
+    if (!isPlaylistOn) {
+        isPlaylistOn = true;
+        openPlaylistBtn.textContent = 'CLOSE PLAYLIST';
+        document.getElementById('fieldContainer').style.visibility = "visible";
+        document.getElementById('nextTempo').style.visibility = "visible";
+        
+    } else {
+        isPlaylistOn = false;
+        openPlaylistBtn.textContent = 'OPEN PLAYLIST';
+        document.getElementById('fieldContainer').style.visibility = "hidden";
+        document.getElementById('fieldContainer2').style.visibility = "hidden";
+        document.getElementById('fieldContainer3').style.visibility = "hidden";
+        document.getElementById('fieldContainer4').style.visibility = "hidden";
+        document.getElementById('fieldContainer5').style.visibility = "hidden";
+        document.getElementById('fieldContainer6').style.visibility = "hidden";
+        document.getElementById('fieldContainer7').style.visibility = "hidden";
+        document.getElementById('fieldContainer8').style.visibility = "hidden";
+        document.getElementById('fieldContainer9').style.visibility = "hidden";
+        document.getElementById('fieldContainer10').style.visibility = "hidden";
+        document.getElementById('previousTempo').style.visibility = "hidden";
+        document.getElementById('nextTempo').style.visibility = "hidden";
+        playlistCount = 1;
+        
+    }
+});
+
+// Remove Playlist button listener
+removeFieldBtn.addEventListener('click', () => {
+    if (playlistCount <= 10 && playlistCount >= 2) {
+        document.getElementById('fieldContainer' + playlistCount).style.visibility = "hidden";
+        playlistCount--;
+    } else if (playlistCount <= 1) {
+        playlistCount = 1;
+        isPlaylistOn = false;
+        openPlaylistBtn.textContent = 'OPEN PLAYLIST';
+        document.getElementById('fieldContainer').style.visibility = "hidden";
+        document.getElementById('previousTempo').style.visibility = "hidden";
+        document.getElementById('nextTempo').style.visibility = "hidden";
+    } else {
+        playlistCount = playlistCount;
+    }    
+});
+
+// Add Playlist button listener
+addFieldBtn.addEventListener('click', () => {
+    if (playlistCount < 10 && !playlistCount < 1) {
+        playlistCount++;
+        document.getElementById('fieldContainer' + playlistCount).style.visibility = "visible";
+        document.getElementById('previousTempo').style.visibility = "visible";
+    } else if (playlistCount == 10) {
+        alert("You have reached the maximum number of tempos")
+    } else {
+        playlistCount = playlistCount;
+    }
+    
+});
+
 window.onload = tapListener;
 const metronome = new Timer(playClick, 60000 / bpm, { immediate: true});

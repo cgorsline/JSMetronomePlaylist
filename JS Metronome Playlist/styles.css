@@ -137,6 +137,9 @@ input[type=range]::-moz-range-track {
     color: #FFF;
 }
 
+.main-btns {
+    display: flex;
+}
 .start-stop {
     width: 50px;
     height: 50px;
@@ -148,6 +151,24 @@ input[type=range]::-moz-range-track {
     line-height: 50px;
     margin: 0 auto;
     cursor: pointer;
+}
+
+.tempo-switch {
+    width: 50px;
+    height: 50px;
+    font-size: 0.7em;
+    text-align: center;
+    background: #525252;
+    border-radius: 50%;
+    border: 1px solid #fa545c;
+    color: #ddd;
+    line-height: 50px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.tempo-switch:hover {
+    background: #ff656c;
 }
 
 .start-stop:hover {
@@ -185,24 +206,59 @@ input[type=range]::-moz-range-track {
     text-transform: uppercase;
 }
 
-.playlist {
-    width: 300px;
-    height: 250px;
-}
-
 .open-playlist-btn {
-    width: 75px;
-    height: 20px;
-    font-size: 0.7em;
+    width: 100px;
+    padding: 5px;
     text-align: center;
+    margin: 20px auto;
+    font-size: 0.7em;
     background: #fa545c;
-    border-radius: 10%;
+    border-radius: 5%;
     color: #FFF;
-    line-height: 20px;
-    margin: 0 auto;
     cursor: pointer;
 }
 
 .open-playlist-btn:hover {
     background: #ff656c;
+}
+
+.field-container {
+    display: flex;
+    margin: 5px auto auto auto;
+    justify-content: space-between;
+    width: 150px;
+    visibility: hidden;
+}
+
+.remove-field-btn {
+    font-size: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.field {
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5em;
+    color: #525252;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.field:hover {
+    color: #ff656c;
+}
+
+.add-field-btn {
+    font-size: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.extra-field-container {
+    display: flex;
+    margin-top: 5px;
+    margin-left: 107px;
+    width: 150px;
+    visibility: hidden;
 }
