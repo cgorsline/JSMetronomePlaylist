@@ -224,16 +224,24 @@ input[type=range]::-moz-range-track {
 
 .field-container {
     display: flex;
-    margin: 5px auto auto auto;
+    margin-left: 55px;
     justify-content: space-between;
     width: 150px;
     visibility: hidden;
 }
 
 .remove-field-btn {
-    font-size: 30px;
+    font-size: 10px;
+    color:#525252;
+    padding: 5px;
+    background: #FFF;
+    border-radius: 5%;
     text-align: center;
     cursor: pointer;
+}
+
+.remove-field-btn:hover {
+    color: #fa545c;
 }
 
 .field {
@@ -250,9 +258,17 @@ input[type=range]::-moz-range-track {
 }
 
 .add-field-btn {
-    font-size: 30px;
+    font-size: 10px;
+    color: #525252;
+    padding: 5px;
+    background: #FFF;
+    border-radius: 5%;
     text-align: center;
     cursor: pointer;
+}
+
+.add-field-btn:hover {
+    color: #fa545c;
 }
 
 .extra-field-container {

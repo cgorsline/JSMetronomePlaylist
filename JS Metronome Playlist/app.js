@@ -11,6 +11,8 @@ const measureCount = document.querySelector('.measure-count');
 const openPlaylistBtn = document.querySelector('.open-playlist-btn');
 const removeFieldBtn = document.querySelector('.remove-field-btn');
 const addFieldBtn = document.querySelector('.add-field-btn');
+const nextTempoBtn = document.getElementById('nextTempo');
+const previousTempoBtn = document.getElementById('previousTempo');
 
 // The 2 Audio Files
 const click1 = new Audio ('click1.mp3');
@@ -31,8 +33,11 @@ let isRunning = false;
 // Create Playlist running variable
 let isPlaylistOn = false;
 
-// Create Playlist counting variable
+// Create Playlist counting variable for displaying fields
 var playlistCount = 1;
+
+// Create Playlist counting variable for active tempo
+var activeTempo = 1;
 
 // Decrease tempo button event listener
 decreaseTempoBtn.addEventListener('click', () => {
@@ -76,7 +81,16 @@ addBeats.addEventListener('click', () => {
 // Start/stop button listener
 startStopBtn.addEventListener('click', () => {
     count = 0;
-    if (!isRunning) {
+    if (isRunning == false && isPlaylistOn == false) {
+        metronome.start();
+        isRunning = true;
+        startStopBtn.textContent = 'STOP';
+    } else if (isRunning == false && isPlaylistOn == true){
+        bpm = document.getElementById('field' + activeTempo).value;
+        document.getElementById('field' + activeTempo).style.color = "#fa545c";
+        document.getElementById('field' + activeTempo).style.fontWeight = "bold";
+        updateMetronome();
+        validateTempo();
         metronome.start();
         isRunning = true;
         startStopBtn.textContent = 'STOP';
@@ -182,9 +196,8 @@ openPlaylistBtn.addEventListener('click', () => {
         isPlaylistOn = true;
         openPlaylistBtn.textContent = 'CLOSE PLAYLIST';
         document.getElementById('fieldContainer').style.visibility = "visible";
-        document.getElementById('nextTempo').style.visibility = "visible";
-        
     } else {
+        metronome.stop();
         isPlaylistOn = false;
         openPlaylistBtn.textContent = 'OPEN PLAYLIST';
         document.getElementById('fieldContainer').style.visibility = "hidden";
@@ -200,13 +213,15 @@ openPlaylistBtn.addEventListener('click', () => {
         document.getElementById('previousTempo').style.visibility = "hidden";
         document.getElementById('nextTempo').style.visibility = "hidden";
         playlistCount = 1;
+        bpm = 120;
+        updateMetronome();
         
     }
 });
 
 // Remove Playlist button listener
 removeFieldBtn.addEventListener('click', () => {
-    if (playlistCount <= 10 && playlistCount >= 2) {
+    if (playlistCount <= 10 && playlistCount > 2) {
         document.getElementById('fieldContainer' + playlistCount).style.visibility = "hidden";
         playlistCount--;
     } else if (playlistCount <= 1) {
@@ -227,13 +242,39 @@ addFieldBtn.addEventListener('click', () => {
         playlistCount++;
         document.getElementById('fieldContainer' + playlistCount).style.visibility = "visible";
         document.getElementById('previousTempo').style.visibility = "visible";
+        document.getElementById('nextTempo').style.visibility = "visible";   
     } else if (playlistCount == 10) {
-        alert("You have reached the maximum number of tempos")
+        alert("You have reached the maximum number of tempos");
     } else {
         playlistCount = playlistCount;
     }
     
 });
+
+// Add Next tempo button listener
+nextTempoBtn.addEventListener('click', () => {
+    
+        document.getElementById('field' + activeTempo).style.color = "#525252";
+        document.getElementById('field' + activeTempo).style.fontWeight = "normal";
+        activeTempo++;
+        bpm = document.getElementById('field' + activeTempo).value;
+        document.getElementById('field' + activeTempo).style.color = "#fa545c";
+        document.getElementById('field' + activeTempo).style.fontWeight = "bold";
+        updateMetronome();
+        validateTempo();
+})
+// Add Previous tempo button listener
+previousTempoBtn.addEventListener('click', () => {
+    
+        document.getElementById('field' + activeTempo).style.color = "#525252";
+        document.getElementById('field' + activeTempo).style.fontWeight = "normal";
+        activeTempo--;
+        bpm = document.getElementById('field' + activeTempo).value;
+        document.getElementById('field' + activeTempo).style.color = "#fa545c";
+        document.getElementById('field' + activeTempo).style.fontWeight = "bold";
+        updateMetronome();
+        validateTempo();
+})
 
 window.onload = tapListener;
 const metronome = new Timer(playClick, 60000 / bpm, { immediate: true});
