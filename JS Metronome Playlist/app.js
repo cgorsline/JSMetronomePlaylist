@@ -41,20 +41,30 @@ let activeTempo = 0;
 
 // Decrease tempo button event listener
 decreaseTempoBtn.addEventListener('click', () => {
-    if (bpm <= 45) { return};
     bpm--;
-    document.getElementById('field' + activeTempo).value = bpm;
-    validateTempo();
-    updateMetronome()
+    if (bpm <= 45) { bpm = 45;};
+    if (isPlaylistOn) {
+        document.getElementById('field' + activeTempo).value = bpm;
+        validateTempo();
+        updateMetronome()
+    } else {
+        validateTempo();
+        updateMetronome()
+    }
 });
 
 // Increase tempo button event listener
 increaseTempoBtn.addEventListener('click', () => {
-    if (bpm >= 280) { return};
     bpm++;
-    document.getElementById('field' + activeTempo).value = bpm;
-    validateTempo();
-    updateMetronome()
+    if (bpm >= 280) { bpm = 280;};
+    if (isPlaylistOn) {
+        document.getElementById('field' + activeTempo).value = bpm;
+        validateTempo();
+        updateMetronome()
+    } else {
+        validateTempo();
+        updateMetronome()
+    }
 });
 
 // Slider listener
