@@ -1,4 +1,5 @@
 import Timer from "./timer.js";
+// Variables for all visual elements
 const tempoDisplay = document.querySelector('.tempo');
 const tempoText = document.querySelector('.tempo-text');
 const decreaseTempoBtn = document.querySelector('.decrease-tempo');
