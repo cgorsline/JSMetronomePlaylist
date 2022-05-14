@@ -214,6 +214,7 @@ input[type=range]::-moz-range-track {
     font-size: 0.7em;
     background: #fa545c;
     border-radius: 5%;
+    border: 1px solid #fa545c;
     color: #FFF;
     cursor: pointer;
 }

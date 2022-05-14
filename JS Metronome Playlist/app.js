@@ -222,6 +222,7 @@ function resetAll() {
 openPlaylistBtn.addEventListener('click', () => {
     if (!isPlaylistOn) {
         isPlaylistOn = true;
+        playlistCount = 1;
         activeTempo = 1;
         openPlaylistBtn.textContent = 'CLOSE PLAYLIST';
         document.getElementById('field' + activeTempo).value = bpm;
@@ -260,7 +261,15 @@ openPlaylistBtn.addEventListener('click', () => {
 
 // Remove Playlist button listener
 removeFieldBtn.addEventListener('click', () => {
-    if (playlistCount <= 10 && playlistCount > 2) {
+    if (playlistCount == activeTempo && playlistCount > 1) {
+        document.getElementById('fieldContainer' + activeTempo).style.visibility = "hidden";
+        document.getElementById('field' + activeTempo).style.color = "#525252";
+        document.getElementById('field' + activeTempo).style.fontWeight = "normal";
+        activeTempo--;
+        playlistCount--;
+        document.getElementById('field' + activeTempo).style.color = "#fa545c";
+        document.getElementById('field' + activeTempo).style.fontWeight = "bold";
+    } else if (playlistCount <= 10 && playlistCount >= 2) {
         document.getElementById('fieldContainer' + playlistCount).style.visibility = "hidden";
         playlistCount--;
     } else if (playlistCount <= 1) {
@@ -270,9 +279,7 @@ removeFieldBtn.addEventListener('click', () => {
         document.getElementById('fieldContainer').style.visibility = "hidden";
         document.getElementById('previousTempo').style.visibility = "hidden";
         document.getElementById('nextTempo').style.visibility = "hidden";
-    } else {
-        playlistCount = playlistCount;
-    }    
+    }  else { playlistCount = playlistCount;}  
 });
 
 // Add Playlist button listener
