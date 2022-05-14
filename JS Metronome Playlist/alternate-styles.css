@@ -1,14 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;1,700&display=swap');
 * {
     padding: 0;
     margin: 0;
 }
 
 body {
-    font-family: 'Outfit', sans-serif;
-    color: #3c474b;
+    font-family: 'Raleway', sans-serif;
+    color: #525252;
     user-select: none;
-    background-color: #e6f5ff;
 }
 
 .container {
@@ -29,7 +28,7 @@ body {
 .bpm-display {
     width: 100%;
     text-align: center;
-    color: #7bb6e0;
+    color: #fa545c;
     font-weight: bold;
 }
 
@@ -54,23 +53,23 @@ body {
     width: 30px;
     height: 30px;
     font-size: 40px;
-    color: #7bb6e0;
     border-radius: 50%;
+    border: 1px solid #ddd;
     text-align: center;
     cursor: pointer;
 }
 
 .tempo-settings .adjust-tempo-btn:hover {
-    background: #7bb6e0;
+    background: #fa545c;
     color: #FFF;
 }
 
 .tempo-settings .decrease-tempo {
-    line-height: 20px;
+    line-height: 25px;
 }
 
 .tempo-settings .increase-tempo {
-    line-height: 26px;
+    line-height: 29px;
 }
 
 input[type=range] {
@@ -91,20 +90,8 @@ input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 16px;
     height: 16px;
-    border: 1px #7bb6e0;
     border-radius: 50%;
-    background-color: #7bb6e0;
-    cursor: pointer;
-    margin-top: -8px;
-}
-
-input[type=range]::-webkit-slider-thumb:hover {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    border: 1px #7bb6e0;
-    border-radius: 50%;
-    background-color: #9cc8e8;
+    background-color: #fa545c;
     cursor: pointer;
     margin-top: -8px;
 }
@@ -114,7 +101,7 @@ input[type=range]::-moz-range-thumb {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background-color: #7bb6e0;
+    background-color: #fa545c;
     cursor: pointer;
     border: none;
 }
@@ -122,7 +109,7 @@ input[type=range]::-moz-range-thumb {
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 1px;
-    background: #fff;
+    background: #ddd;
 }
 
 input[type=range]::-moz-range-track {
@@ -136,19 +123,17 @@ input[type=range]::-moz-range-track {
     height: 50px;
     font-size: 0.7em;
     text-align: center;
-    background: #fff;
-    border: 1px solid #fff;
+    background: #ddd;
+    border: 1px solid #525252;
     border-radius: 50%;
-    color: #7bb6e0;
+    color: #fa545c;
     line-height: 50px;
     cursor: pointer;
     margin: 5px auto;
-    margin-bottom: 15px;
 }
 
 .tap-tempo:hover {
-    background: #3c474b;
-    border: 1px solid #3c474b;
+    background: #525252;
     color: #FFF;
 }
 
@@ -160,9 +145,8 @@ input[type=range]::-moz-range-track {
     height: 50px;
     font-size: 0.7em;
     text-align: center;
-    background: #7bb6e0;
+    background: #fa545c;
     border-radius: 50%;
-    border: 1px solid #7bb6e0;
     color: #FFF;
     line-height: 50px;
     margin: 0 auto;
@@ -170,28 +154,25 @@ input[type=range]::-moz-range-track {
 }
 
 .tempo-switch {
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    height: 50px;
     font-size: 0.7em;
     text-align: center;
-    background: #fff;
-    border: 1px solid #fff;
+    background: #525252;
     border-radius: 50%;
-    color: #7bb6e0;
-    line-height: 55px;
+    border: 1px solid #fa545c;
+    color: #ddd;
+    line-height: 50px;
     cursor: pointer;
     visibility: hidden;
-    margin: 0px auto;
 }
 
 .tempo-switch:hover {
-    background: #3c474b;
-    border: 1px solid #3c474b;
-    color: #FFF;
+    background: #ff656c;
 }
 
 .start-stop:hover {
-    background: #9cc8e8;
+    background: #ff656c;
 }
 
 .measures {
@@ -204,22 +185,19 @@ input[type=range]::-moz-range-track {
     width: 20px;
     height: 20px;
     border-radius: 50%;
+    border: 1px solid #ddd;
     text-align: center;
     margin: 0 5px;
     cursor: pointer;
 }
 
 .measures .stepper:hover {
-    background: #7bb6e0;
-    color: #FFF;
-}
-
-.measures .subtract-beats {
-    line-height: 17px;
+    background: #ff656c;
+    color: #fff;
 }
 
 .measures .add-beats {
-    line-height: 19px;
+    line-height: 21px;
 }
 
 .beats-per-measure-text {
@@ -234,20 +212,20 @@ input[type=range]::-moz-range-track {
     text-align: center;
     margin: 20px auto;
     font-size: 0.7em;
-    background: #7bb6e0;
+    background: #fa545c;
     border-radius: 5%;
-    border: 1px solid #7bb6e0;
+    border: 1px solid #fa545c;
     color: #FFF;
     cursor: pointer;
 }
 
 .open-playlist-btn:hover {
-    background: #9cc8e8;
+    background: #ff656c;
 }
 
 .field-container {
     display: flex;
-    margin-left: 45px;
+    margin-left: 55px;
     justify-content: space-between;
     width: 150px;
     visibility: hidden;
@@ -257,47 +235,47 @@ input[type=range]::-moz-range-track {
     font-size: 10px;
     color:#525252;
     padding: 5px;
-    background: #e6f5ff;
+    background: #FFF;
     border-radius: 5%;
     text-align: center;
     cursor: pointer;
 }
 
 .remove-field-btn:hover {
-    color: #7bb6e0;
+    color: #fa545c;
 }
 
 .field {
     border: none;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 1.5em;
-    color: #a4b1b6;
+    color: #525252;
     text-align: center;
-    background-color: #e6f5ff;
+    margin-left: 10px;
 }
 
 .field:hover {
-    color: #7bb6e0;
+    color: #ff656c;
 }
 
 .add-field-btn {
     font-size: 10px;
+    color: #525252;
     padding: 5px;
-    background: #e6f5ff;
+    background: #FFF;
     border-radius: 5%;
     text-align: center;
     cursor: pointer;
 }
 
 .add-field-btn:hover {
-    color: #7bb6e0;
+    color: #fa545c;
 }
 
 .extra-field-container {
     display: flex;
     margin-top: 5px;
-    margin-left: 97px;
+    margin-left: 107px;
     width: 150px;
-    color: #a4b1b6;
     visibility: hidden;
 }
