@@ -262,6 +262,9 @@ removeFieldBtn.addEventListener('click', () => {
         playlistCount--;
         document.getElementById('field' + activeTempo).style.color = "#7bb6e0";
         document.getElementById('field' + activeTempo).style.fontWeight = "bold";
+        bpm = document.getElementById('field' + activeTempo).value;
+        validateTempo();
+        updateMetronome();
     } else if (playlistCount <= 10 && playlistCount >= 2) {
         document.getElementById('fieldContainer' + playlistCount).style.visibility = "hidden";
         playlistCount--;
