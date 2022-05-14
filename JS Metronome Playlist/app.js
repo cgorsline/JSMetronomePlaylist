@@ -34,15 +34,16 @@ let isRunning = false;
 let isPlaylistOn = false;
 
 // Create Playlist counting variable for displaying fields
-var playlistCount = 1;
+let playlistCount = 1;
 
 // Create Playlist counting variable for active tempo
-var activeTempo = 1;
+let activeTempo = 0;
 
 // Decrease tempo button event listener
 decreaseTempoBtn.addEventListener('click', () => {
     if (bpm <= 45) { return};
     bpm--;
+    document.getElementById('field' + activeTempo).value = bpm;
     validateTempo();
     updateMetronome()
 });
@@ -51,6 +52,7 @@ decreaseTempoBtn.addEventListener('click', () => {
 increaseTempoBtn.addEventListener('click', () => {
     if (bpm >= 280) { return};
     bpm++;
+    document.getElementById('field' + activeTempo).value = bpm;
     validateTempo();
     updateMetronome()
 });
@@ -58,8 +60,15 @@ increaseTempoBtn.addEventListener('click', () => {
 // Slider listener
 tempoSlider.addEventListener('input', () => {
     bpm = tempoSlider.value;
-    validateTempo();
-    updateMetronome()
+    if (isPlaylistOn) {
+        document.getElementById('field' + activeTempo).value = tempoSlider.value;
+        validateTempo();
+        updateMetronome()
+    } else {
+        validateTempo();
+        updateMetronome()
+    }
+    
 });
 
 // Subtract beats button listener
@@ -106,6 +115,7 @@ function tapListener() {
     tapElement.onclick = function() {
         taps.push( Date.now() );
         calcBPM();
+        document.getElementById('field' + activeTempo).value = bpm;
     };
 };
 
@@ -171,8 +181,8 @@ function updateMetronome() {
 };
 
 function validateTempo() {
-    if (bpm <= 45) { return};
-    if (bpm >= 280) { return};
+    if (bpm <= 45) { bpm = 45};
+    if (bpm >= 280) { bpm = 280};
 };
 
 function playClick() {
@@ -190,16 +200,30 @@ function playClick() {
     count++;
 };
 
+function resetAll() {
+    bpm = 120;
+    beatsPerMeasure = 4;
+    count = 0;
+    tempoTextString = 'MEDIUM';
+    isRunning = false;
+}
+
 // Open/Close Playlist button listener
 openPlaylistBtn.addEventListener('click', () => {
     if (!isPlaylistOn) {
         isPlaylistOn = true;
+        activeTempo = 1;
         openPlaylistBtn.textContent = 'CLOSE PLAYLIST';
+        document.getElementById('field' + activeTempo).value = bpm;
         document.getElementById('fieldContainer').style.visibility = "visible";
+        document.getElementById('field' + activeTempo).style.color = "#fa545c";
+        document.getElementById('field' + activeTempo).style.fontWeight = "bold";
     } else {
         metronome.stop();
         isPlaylistOn = false;
+        isRunning = false;
         openPlaylistBtn.textContent = 'OPEN PLAYLIST';
+        startStopBtn.textContent = 'START';
         document.getElementById('fieldContainer').style.visibility = "hidden";
         document.getElementById('fieldContainer2').style.visibility = "hidden";
         document.getElementById('fieldContainer3').style.visibility = "hidden";
@@ -212,9 +236,14 @@ openPlaylistBtn.addEventListener('click', () => {
         document.getElementById('fieldContainer10').style.visibility = "hidden";
         document.getElementById('previousTempo').style.visibility = "hidden";
         document.getElementById('nextTempo').style.visibility = "hidden";
+        document.getElementById('field' + activeTempo).style.color = "#525252";
+        document.getElementById('field' + activeTempo).style.fontWeight = "normal";
         playlistCount = 1;
+        activeTempo = 1;
         bpm = 120;
+        document.getElementById('field1').value = bpm;
         updateMetronome();
+        validateTempo();
         
     }
 });
@@ -240,6 +269,7 @@ removeFieldBtn.addEventListener('click', () => {
 addFieldBtn.addEventListener('click', () => {
     if (playlistCount < 10 && !playlistCount < 1) {
         playlistCount++;
+        document.getElementById('field' + playlistCount).value = "120";
         document.getElementById('fieldContainer' + playlistCount).style.visibility = "visible";
         document.getElementById('previousTempo').style.visibility = "visible";
         document.getElementById('nextTempo').style.visibility = "visible";   
@@ -253,7 +283,8 @@ addFieldBtn.addEventListener('click', () => {
 
 // Add Next tempo button listener
 nextTempoBtn.addEventListener('click', () => {
-    
+
+    if (activeTempo < 10 && activeTempo < playlistCount){
         document.getElementById('field' + activeTempo).style.color = "#525252";
         document.getElementById('field' + activeTempo).style.fontWeight = "normal";
         activeTempo++;
@@ -262,10 +293,11 @@ nextTempoBtn.addEventListener('click', () => {
         document.getElementById('field' + activeTempo).style.fontWeight = "bold";
         updateMetronome();
         validateTempo();
-})
+    }   else { activeTempo = activeTempo;}
+});
 // Add Previous tempo button listener
 previousTempoBtn.addEventListener('click', () => {
-    
+    if (activeTempo > 1){
         document.getElementById('field' + activeTempo).style.color = "#525252";
         document.getElementById('field' + activeTempo).style.fontWeight = "normal";
         activeTempo--;
@@ -274,7 +306,9 @@ previousTempoBtn.addEventListener('click', () => {
         document.getElementById('field' + activeTempo).style.fontWeight = "bold";
         updateMetronome();
         validateTempo();
-})
+    }   else { activeTempo = activeTempo;}
+});
+
 
 window.onload = tapListener;
 const metronome = new Timer(playClick, 60000 / bpm, { immediate: true});
